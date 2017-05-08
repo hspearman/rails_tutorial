@@ -3,11 +3,26 @@ class CommentsController < ApplicationController
 public
     def create
 
-        # Create comment on article
+        # Find article by ID
         @article = Article.find(params[:article_id])
+
+        # Create comment on article
         @comment = @article.comments.create(comment_params)
 
         redirect_to article_path(@article)
+    end
+
+    def destroy
+
+        # Find article / comment by ID
+        @article = Article.find(params[:article_id])
+        @comment = @article.comments.find(params[:id])
+
+        # Delete comment
+        @comment.destroy
+
+        redirect_to article_path(@article)
+
     end
 
 private
